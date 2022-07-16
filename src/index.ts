@@ -1,4 +1,6 @@
-import { Application, Sprite } from 'pixi.js'
+import { Application } from 'pixi.js'
+import { Peg } from './scenes/Peg';
+import { collideCircle } from './util/collision';
 
 const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -9,11 +11,27 @@ const app = new Application({
 	height: 480
 });
 
-const clampy: Sprite = Sprite.from("clampy.png");
+// pass in the screen size to avoid "asking up"
+const peg: Peg = new Peg(150, 150, 'blue');
+const pegTwo: Peg = new Peg(150, 150, 'orange');
 
-clampy.anchor.set(0.5);
+peg.x += 100;
+peg.y += 150;
 
-clampy.x = app.screen.width / 2;
-clampy.y = app.screen.height / 2;
+pegTwo.x += 99;
+pegTwo.y += 0;
+//const sceny: Scene = new Scene(app.screen.width, app.screen.height);
 
-app.stage.addChild(clampy);
+//app.stage.addChild(sceny)
+app.stage.addChild(peg);
+app.stage.addChild(pegTwo);
+
+console.log(collideCircle(peg, pegTwo));
+console.log(peg.peg.width)
+function resize() {
+	app.renderer.resize(window.innerWidth, window.innerHeight);
+}
+
+
+resize();
+
